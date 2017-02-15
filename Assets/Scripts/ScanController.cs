@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScanController : MonoBehaviour {
 
-	public Material scannedMaterial;
+	public Text scannedItems;
+
 	GameObject mainCamera;
-	GameObject scannedObject;
 
 	// Use this for initialization
 	void Start () {
 		mainCamera = GameObject.FindWithTag ("MainCamera");
+		scannedItems.text = "";
 	}
 	
 	// Update is called once per frame
@@ -31,8 +33,8 @@ public class ScanController : MonoBehaviour {
 				// If our raycast hits an object with the Scannable component (presently a script that does NOTHING!), we're in business and we want to alter the object's properties to signify it has been scanned.
 				Scannable s = hit.collider.GetComponent<Scannable> ();
 				if (s != null) {
-					scannedObject = s.gameObject;
-					scannedObject.GetComponent<Renderer>().material = scannedMaterial;
+					// Executes the scannable objects checkScan script and adds to the pictogram set if valid.
+					scannedItems.text = scannedItems.text + s.checkScan();
 				}
 			}
 		}
