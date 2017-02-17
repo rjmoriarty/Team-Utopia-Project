@@ -1,18 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ScanController : MonoBehaviour {
 
-	public Text scannedItems;
+	List<Pictogram> learnedPictograms;
 
 	GameObject mainCamera;
 
 	// Use this for initialization
 	void Start () {
 		mainCamera = GameObject.FindWithTag ("MainCamera");
-		scannedItems.text = "";
 	}
 	
 	// Update is called once per frame
@@ -30,11 +30,16 @@ public class ScanController : MonoBehaviour {
 			Ray ray = mainCamera.GetComponent<Camera> ().ScreenPointToRay (new Vector3 (x, y));
 			RaycastHit hit;
 			if (Physics.Raycast (ray, out hit)) {
-				// If our raycast hits an object with the Scannable component (presently a script that does NOTHING!), we're in business and we want to alter the object's properties to signify it has been scanned.
+				// If our raycast hits an object with the Scannable component (presently a script that does NOTHING!), we're in business.
 				Scannable s = hit.collider.GetComponent<Scannable> ();
 				if (s != null) {
-					// Executes the scannable objects checkScan script and adds to the pictogram set if valid.
-					scannedItems.text = scannedItems.text + s.checkScan();
+					// Iterate through each Pictogram from the scanned object and add any unlearned Pictograms to our learnedPictograms list.
+					foreach (Pictogram p in s.theseSymbols) {
+						Pictogram matchingPictogram = learnedPictograms.Where(o => o.ID == p.ID).FirstOrDefault();
+						if (matchingPictogram == null) {
+							learnedPictograms.Add(p);
+						}
+					}
 				}
 			}
 		}

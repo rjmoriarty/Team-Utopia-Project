@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Team-Utopia-Project", "Team-Utopia-Project.csproj", "{799CF3E8-C6F3-CB99-8C83-B73CB14A62FC}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Team-Utopia-Project", "Assembly-CSharp.csproj", "{5A7662B8-6F9F-C037-4940-7DC1570A900D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,12 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{799CF3E8-C6F3-CB99-8C83-B73CB14A62FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{799CF3E8-C6F3-CB99-8C83-B73CB14A62FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{799CF3E8-C6F3-CB99-8C83-B73CB14A62FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{799CF3E8-C6F3-CB99-8C83-B73CB14A62FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A7662B8-6F9F-C037-4940-7DC1570A900D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A7662B8-6F9F-C037-4940-7DC1570A900D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A7662B8-6F9F-C037-4940-7DC1570A900D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A7662B8-6F9F-C037-4940-7DC1570A900D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal

@@ -2,21 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class Pictogram
+{
+	public int ID;
+
+	// This will be replaced by the actual 2d image when available.
+	public string symbol;
+}
+
 public class Scannable : MonoBehaviour {
 
-	public string scanText;
-	public Material scannedMaterial;
-	bool scanned;
+	public List<Pictogram> theseSymbols;
 
-	// This method is executed by the ScanController script when the GameObject is scanned.
-	// If a valid scan occurs, the result is added to an aggregate string in the ScanController, representing a learned pictogram.
-	public string checkScan() {
-		if (!scanned) {
-			scanned = true;
-			GetComponent<Renderer> ().material = scannedMaterial;
-			return scanText + " ";
-		} else {
-			return "";
-		}
-	}
 }
