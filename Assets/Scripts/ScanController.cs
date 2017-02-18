@@ -9,14 +9,21 @@ public class ScanController : MonoBehaviour {
 	List<Pictogram> learnedPictograms;
 
 	GameObject mainCamera;
+	GameObject scanner;
+	bool scannerHolstered;
 
 	// Use this for initialization
 	void Start () {
 		mainCamera = GameObject.FindWithTag ("MainCamera");
+		learnedPictograms = new List<Pictogram> ();
+		// scanner = findScanner ();
+		scanner = GameObject.Find("scanner01");
+		scannerHolstered = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		holster ();
 		scan ();
 	}
 
@@ -42,6 +49,15 @@ public class ScanController : MonoBehaviour {
 					}
 				}
 			}
+		}
+	}
+
+	void holster() {
+		if (Input.GetButtonDown ("Holster")) {
+			
+			scanner.SetActive (scannerHolstered);
+			scannerHolstered = !scannerHolstered;
+		
 		}
 	}
 }
