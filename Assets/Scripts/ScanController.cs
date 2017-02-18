@@ -15,6 +15,7 @@ public class ScanController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		mainCamera = GameObject.FindWithTag ("MainCamera");
+		learnedPictograms = new List<Pictogram> ();
 		// scanner = findScanner ();
 		scanner = GameObject.Find("scanner01");
 		scannerHolstered = false;
