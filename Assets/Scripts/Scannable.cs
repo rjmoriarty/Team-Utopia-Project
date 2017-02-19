@@ -5,10 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class Pictogram
 {
-	public int ID;
-
-	// This will be replaced by the actual 2d image when available.
-	public string symbol;
+	public int id;
+	public Material symbol;
+	public string meaning;
 }
 
 public class Scannable : MonoBehaviour {
