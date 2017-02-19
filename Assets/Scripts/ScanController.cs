@@ -26,6 +26,7 @@ public class ScanController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		holster ();
+		rotateScannerSelection ();
 		scan ();
 		drawScannerScreen ();
 	}
@@ -67,6 +68,29 @@ public class ScanController : MonoBehaviour {
 			Pictogram selectedPictogram = learnedPictograms.Where (x => x.id == selectedPictogramID).FirstOrDefault ();
 			Material selectedPictogramSymbol = selectedPictogram.symbol;
 			screen.GetComponent<Renderer> ().material = selectedPictogramSymbol;
+		}
+	}
+
+	void rotateScannerSelection() {
+		if (anyPictogramsLearned) {
+			if (Input.GetButtonDown("RotateScanner")) {
+				bool pictogramFound = false;
+				int pictogramLocatorPosition = selectedPictogramID;
+			
+				while (!pictogramFound) {
+					if (pictogramLocatorPosition >= 30)
+					{
+						pictogramLocatorPosition = 1;
+					} else {
+						pictogramLocatorPosition++;
+					}
+					Pictogram foundPictogram = learnedPictograms.Where (x => x.id == pictogramLocatorPosition).FirstOrDefault();
+					if (foundPictogram != null) {
+						selectedPictogramID = pictogramLocatorPosition;
+						pictogramFound = true;
+					}
+				}
+			}
 		}
 	}
 
