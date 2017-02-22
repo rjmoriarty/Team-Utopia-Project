@@ -41,7 +41,8 @@ public class ScanController : MonoBehaviour {
 			Ray ray = mainCamera.GetComponent<Camera> ().ScreenPointToRay (new Vector3 (x, y));
 			RaycastHit hit;
 			if (Physics.Raycast (ray, out hit)) {
-				// If our raycast hits an object with the Scannable component, we're in business.
+				
+				// If our raycast hits an object with the Scannable component, we're in business for scanning.
 				Scannable s = hit.collider.GetComponent<Scannable> ();
 				if (s != null) {
 					// Iterate through each Pictogram from the scanned object and add any unlearned Pictograms to our learnedPictograms list.
@@ -58,6 +59,11 @@ public class ScanController : MonoBehaviour {
 						selectedPictogramID = firstLearnedPictogram.id;
 						anyPictogramsLearned = true;
 					}
+				}
+
+				BlankPieceController b = hit.collider.GetComponent<BlankPieceController> ();
+				if (b != null && learnedPictograms.Count > 0) {
+					b.placedPictogram = learnedPictograms.Where (z => z.id == selectedPictogramID).FirstOrDefault ();
 				}
 			}
 		}
