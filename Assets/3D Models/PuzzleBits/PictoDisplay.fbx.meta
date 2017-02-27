@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 66746e76fc341b84da186cc53fc15b58
-timeCreated: 1488162536
+timeCreated: 1488195702
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,8 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Cube
-    4300002: PictoDisplay
+    4300000: PictoDisplay
   materials:
     importMaterials: 1
     materialName: 0
