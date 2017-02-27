@@ -39,38 +39,9 @@ public class ScanController : MonoBehaviour {
 	void Update () {
 		holster ();
 		rotateScannerSelection ();
-        if (Input.GetButtonDown("Fire1"))
-        {
-            scanTimer = true;
-            
-        }
         scan();
-        if (scanTimer)
-        {
-            scanInstantiationTimer -= Time.deltaTime;
-        }
-        if (scanInstantiationTimer <= 0)
-        {
-            scanTimer = false;
-            displayOnScreen = true;
-            
-            scanInstantiationTimer = 0.5f;
-            scanRaysObj = Instantiate(scanRays, scanRaysEmitter.position, scanRaysEmitter.rotation);
-            scanRaysObj.transform.parent = transform;
-            
-            Destroy(scanRaysObj, 5.0f);
-        }
+        drawScannerScreen();
 
-        if (displayOnScreen)
-        {
-            displayIconTimer -= Time.deltaTime;
-        }
-        
-        if(displayIconTimer <= 0)
-        {
-            drawScannerScreen();
-            displayIconTimer = 4f;
-        }
 		
 
 
@@ -80,6 +51,12 @@ public class ScanController : MonoBehaviour {
 		// Scans are attempted when the configurable "Fire1" button is pressed.
 		if (Input.GetButtonDown ("Fire1")) {
             scannerSound.Play();
+
+            scanInstantiationTimer = 0.5f;
+            scanRaysObj = Instantiate(scanRays, scanRaysEmitter.position, scanRaysEmitter.rotation);
+            scanRaysObj.transform.parent = transform;
+
+            Destroy(scanRaysObj, 1.0f);
 
 
             // Identify the center of the screen. These ints will be used to form the point for our raycast.
