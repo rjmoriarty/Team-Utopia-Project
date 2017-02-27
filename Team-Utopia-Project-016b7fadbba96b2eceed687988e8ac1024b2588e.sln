@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Team-Utopia-Project-016b7fadbba96b2eceed687988e8ac1024b2588e", "Assembly-CSharp.csproj", "{4D97BC1C-CB1F-B268-C4D0-5C692381976E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D97BC1C-CB1F-B268-C4D0-5C692381976E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D97BC1C-CB1F-B268-C4D0-5C692381976E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D97BC1C-CB1F-B268-C4D0-5C692381976E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D97BC1C-CB1F-B268-C4D0-5C692381976E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

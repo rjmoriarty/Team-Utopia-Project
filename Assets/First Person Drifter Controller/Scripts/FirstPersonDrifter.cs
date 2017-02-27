@@ -52,6 +52,10 @@ public class FirstPersonDrifter: MonoBehaviour
     private Vector3 contactPoint;
     private bool playerControl = false;
     private int jumpTimer;
+	public AudioClip footStep;
+	public AudioSource footsource;
+	public float stepRate = 0.5f;
+	public float stepCoolDown;
  
     void Start()
     {
@@ -64,6 +68,13 @@ public class FirstPersonDrifter: MonoBehaviour
     }
  
     void FixedUpdate() {
+
+		stepCoolDown -= Time.deltaTime;
+		if ((Input.GetAxis ("Horizontal") != 0f || Input.GetAxis ("Vertical") != 0f) && stepCoolDown < 0f) {
+			footsource.pitch = 1f + Random.Range (-0.8f, -0.3f);
+			footsource.PlayOneShot (footStep, 0.9f);
+			stepCoolDown = stepRate;
+		}
         float inputX = Input.GetAxis("Horizontal");
         float inputY = Input.GetAxis("Vertical");
         // If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
@@ -154,3 +165,4 @@ public class FirstPersonDrifter: MonoBehaviour
         //print ("Ouch! Fell " + fallDistance + " units!");   
     }
 }
+

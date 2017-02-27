@@ -10,9 +10,13 @@ public class MovePuzzleBarriers : MonoBehaviour {
     private float moveTimeSeconds;
     private float moveSpeed;
     private bool isMoving;
+	public AudioClip barrierSound;
+	public AudioSource barrierSource;
 
     void Start () {
         moveSpeed = Vector3.Distance(transform.position, moveDestination) / moveTimeSeconds;
+
+		barrierSource = GetComponent<AudioSource>();
     }
 	
 	void Update () {
@@ -26,5 +30,9 @@ public class MovePuzzleBarriers : MonoBehaviour {
 
     public void MoveBarrier() {
         isMoving = true;
+
+
+		barrierSource.Play ();
+
     }
 }
