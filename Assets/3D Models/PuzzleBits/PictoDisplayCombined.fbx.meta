@@ -1,16 +1,27 @@
 fileFormatVersion: 2
-guid: 66746e76fc341b84da186cc53fc15b58
-timeCreated: 1488162536
+guid: ae627c71f1f92c74bb72962240ec8f37
+timeCreated: 1488188546
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Cube
+    100000: PictoDisplay
+    100002: //RootNode
+    100004: PictoHolder
+    100006: PictoHolderClaw
+    400000: PictoDisplay
+    400002: //RootNode
+    400004: PictoHolder
+    400006: PictoHolderClaw
+    2300000: PictoDisplay
+    2300002: PictoHolder
+    2300004: PictoHolderClaw
+    3300000: PictoDisplay
+    3300002: PictoHolder
+    3300004: PictoHolderClaw
+    4300000: PictoHolder
     4300002: PictoDisplay
+    4300004: PictoHolderClaw
   materials:
     importMaterials: 1
     materialName: 0
