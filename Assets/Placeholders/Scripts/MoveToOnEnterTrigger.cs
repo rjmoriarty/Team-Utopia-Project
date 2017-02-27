@@ -21,6 +21,8 @@ public class MoveToOnEnterTrigger : MonoBehaviour {
 	
 	void Update () {
 		if (isMoving) {
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.Play();
             movingObject.transform.position = Vector3.MoveTowards(movingObject.transform.position, moveDestination, moveTimeSeconds * Time.deltaTime);
             if (movingObject.transform.position == moveDestination) {
                 isMoving = false;
@@ -30,6 +32,7 @@ public class MoveToOnEnterTrigger : MonoBehaviour {
 
     void OnTriggerEnter(Collider target) {
         if (target.tag == "Player") {
+
             isMoving = true;
         }
     }

@@ -14,8 +14,20 @@ public class ScanController : MonoBehaviour {
 	bool anyPictogramsLearned;
 	int selectedPictogramID;
 
-	// Use this for initialization
-	void Start () {
+    //Variables to set the scanner rays, play the sound and only emit the particles after a certain point in the sound.
+    public GameObject scanRays;
+    private GameObject scanRaysObj;
+    public Transform scanRaysEmitter;
+    public AudioSource scannerSound;
+    private float scanInstantiationTimer = 1.5f;
+    private bool scanTimer = false;
+
+
+    private bool displayOnScreen = false;
+   public float displayIconTimer = 4f;
+
+    // Use this for initialization
+    void Start () {
 		mainCamera = GameObject.FindWithTag ("MainCamera");
 		learnedPictograms = new List<Pictogram> ();
 		scanner = GameObject.Find("scanner01");
@@ -27,15 +39,51 @@ public class ScanController : MonoBehaviour {
 	void Update () {
 		holster ();
 		rotateScannerSelection ();
-		scan ();
-		drawScannerScreen ();
+        if (Input.GetButtonDown("Fire1"))
+        {
+            scanTimer = true;
+            
+        }
+        scan();
+        if (scanTimer)
+        {
+            scanInstantiationTimer -= Time.deltaTime;
+        }
+        if (scanInstantiationTimer <= 0)
+        {
+            scanTimer = false;
+            displayOnScreen = true;
+            
+            scanInstantiationTimer = 0.5f;
+            scanRaysObj = Instantiate(scanRays, scanRaysEmitter.position, scanRaysEmitter.rotation);
+            scanRaysObj.transform.parent = transform;
+            
+            Destroy(scanRaysObj, 5.0f);
+        }
+
+        if (displayOnScreen)
+        {
+            displayIconTimer -= Time.deltaTime;
+        }
+        
+        if(displayIconTimer <= 0)
+        {
+            drawScannerScreen();
+            displayIconTimer = 4f;
+        }
+		
+
+
 	}
 
 	void scan() {
 		// Scans are attempted when the configurable "Fire1" button is pressed.
 		if (Input.GetButtonDown ("Fire1")) {
-			// Identify the center of the screen. These ints will be used to form the point for our raycast.
-			int x = Screen.width / 2;
+            scannerSound.Play();
+
+
+            // Identify the center of the screen. These ints will be used to form the point for our raycast.
+            int x = Screen.width / 2;
 			int y = Screen.height / 2;
 
 			Ray ray = mainCamera.GetComponent<Camera> ().ScreenPointToRay (new Vector3 (x, y));
@@ -73,8 +121,8 @@ public class ScanController : MonoBehaviour {
 		if (anyPictogramsLearned) {
 			Pictogram selectedPictogram = learnedPictograms.Where (x => x.id == selectedPictogramID).FirstOrDefault ();
 			Material selectedPictogramSymbol = selectedPictogram.symbol;
-			screen.GetComponent<Renderer> ().material = selectedPictogramSymbol;
-		}
+			screen.GetComponent<Renderer> ().material = selectedPictogramSymbol;            
+        }
 	}
 
 	void rotateScannerSelection() {

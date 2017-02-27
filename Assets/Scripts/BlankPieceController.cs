@@ -7,6 +7,8 @@ public class BlankPieceController : MonoBehaviour {
 	public int expectedPictogramID;
 	public Pictogram placedPictogram;
 
+    public GameObject elementUnlocked;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -15,6 +17,10 @@ public class BlankPieceController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		draw ();
+        if (expectedPictogramID == placedPictogram.id)
+        {
+            elementUnlocked.GetComponent<MoveToOnEnterTrigger>().enabled = true;
+        }
 	}
 
 	void draw() {
