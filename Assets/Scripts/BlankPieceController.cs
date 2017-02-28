@@ -19,7 +19,17 @@ public class BlankPieceController : MonoBehaviour {
 		draw ();
         if (expectedPictogramID == placedPictogram.id)
         {
-            elementUnlocked.GetComponent<MoveToOnEnterTrigger>().enabled = true;
+
+            if (elementUnlocked.GetComponent<MoveToOnEnterTrigger>() != null)
+            {
+               elementUnlocked.GetComponent<MoveToOnEnterTrigger>().enabled = true;
+            }
+            
+
+            if(elementUnlocked.GetComponent<PortalSpawn>() != null)
+            {
+                elementUnlocked.GetComponent<PortalSpawn>().enabled = true;
+            }
         }
 	}
 
