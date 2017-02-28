@@ -10,6 +10,7 @@ public class ScanController : MonoBehaviour {
 	GameObject mainCamera;
 	GameObject scanner;
 	GameObject screen;
+    TextMesh textMesh;
 	bool scannerHolstered;
 	bool anyPictogramsLearned;
 	int selectedPictogramID;
@@ -24,7 +25,10 @@ public class ScanController : MonoBehaviour {
 
 
     private bool displayOnScreen = false;
-   public float displayIconTimer = 4f;
+    public float displayIconTimer = 4f;
+
+    [SerializeField]
+    private Material tranparentScreen;
 
     // Use this for initialization
     void Start () {
@@ -33,6 +37,7 @@ public class ScanController : MonoBehaviour {
 		scanner = GameObject.Find("scanner01");
 		scannerHolstered = false;
 		screen = GameObject.Find ("Screen");
+        textMesh = GameObject.Find("TextScreen").GetComponent<TextMesh>();
 	}
 	
 	// Update is called once per frame
@@ -66,25 +71,34 @@ public class ScanController : MonoBehaviour {
 			Ray ray = mainCamera.GetComponent<Camera> ().ScreenPointToRay (new Vector3 (x, y));
 			RaycastHit hit;
 			if (Physics.Raycast (ray, out hit)) {
-				
-				// If our raycast hits an object with the Scannable component, we're in business for scanning.
-				Scannable s = hit.collider.GetComponent<Scannable> ();
-				if (s != null) {
-					// Iterate through each Pictogram from the scanned object and add any unlearned Pictograms to our learnedPictograms list.
-					foreach (Pictogram p in s.theseSymbols) {
-						Pictogram matchingPictogram = learnedPictograms.Where(o => o.id == p.id).FirstOrDefault();
-						if (matchingPictogram == null) {
-							learnedPictograms.Add(p);
-						}
-					}
 
-					// The first time we score a succesful scan, put the first learned Pictogram on the screen.
-					if (!anyPictogramsLearned) {
-						Pictogram firstLearnedPictogram = learnedPictograms.FirstOrDefault ();
-						selectedPictogramID = firstLearnedPictogram.id;
-						anyPictogramsLearned = true;
-					}
-				}
+                // If our raycast hits an object with the Scannable component, we're in business for scanning.
+                if (hit.collider.gameObject.tag == "PictoHistory") {
+                    HistoricalPictos h = hit.collider.gameObject.GetComponent<HistoricalPictos>();
+                    if (h != null) {
+                        setTextOnScanner(h.getPictoMeaning());
+                    }
+                } else {
+                    Scannable s = hit.collider.GetComponent<Scannable>();
+                    if (s != null) {
+                        // Iterate through each Pictogram from the scanned object and add any unlearned Pictograms to our learnedPictograms list.
+                        clearText();
+
+                        foreach (Pictogram p in s.theseSymbols) {
+                            Pictogram matchingPictogram = learnedPictograms.Where(o => o.id == p.id).FirstOrDefault();
+                            if (matchingPictogram == null) {
+                                learnedPictograms.Add(p);
+                            }
+                        }
+
+                        // The first time we score a succesful scan, put the first learned Pictogram on the screen.
+                        if (!anyPictogramsLearned) {
+                            Pictogram firstLearnedPictogram = learnedPictograms.FirstOrDefault();
+                            selectedPictogramID = firstLearnedPictogram.id;
+                            anyPictogramsLearned = true;
+                        }
+                    }
+                }
 
 				BlankPieceController b = hit.collider.GetComponent<BlankPieceController> ();
 				if (b != null && learnedPictograms.Count > 0) {
@@ -95,7 +109,10 @@ public class ScanController : MonoBehaviour {
 	}
 
 	void drawScannerScreen() {
-		if (anyPictogramsLearned) {
+        if (getTextOnScanner() != "") {
+            screen.GetComponent<Renderer>().material = tranparentScreen;
+        }
+		else if (anyPictogramsLearned) {
 			Pictogram selectedPictogram = learnedPictograms.Where (x => x.id == selectedPictogramID).FirstOrDefault ();
 			Material selectedPictogramSymbol = selectedPictogram.symbol;
 			screen.GetComponent<Renderer> ().material = selectedPictogramSymbol;            
@@ -105,6 +122,7 @@ public class ScanController : MonoBehaviour {
 	void rotateScannerSelection() {
 		if (anyPictogramsLearned) {
 			if (Input.GetButtonDown("RotateScanner")) {
+                clearText();
 				bool pictogramFound = false;
 				int pictogramLocatorPosition = selectedPictogramID;
 			
@@ -133,4 +151,18 @@ public class ScanController : MonoBehaviour {
 		
 		}
 	}
+
+    private void clearText() {
+        textMesh.text = "";
+    }
+
+    private string getTextOnScanner() {
+        return textMesh.text;
+    }
+
+    private void setTextOnScanner(string text) {
+        // Yep, seriously
+        text = text.Replace("NEWLINE", "\n");
+        textMesh.text = text;
+    }
 }

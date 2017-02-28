@@ -16,6 +16,8 @@ public class MoveToOnEnterTrigger : MonoBehaviour {
 	public AudioClip entranceSound;
 	public AudioSource entranceSource;
 
+    private bool hasAudioPlayed = false;
+
 	void Start () {
         originalPosition = movingObject.transform.position;
         moveSpeed = Vector3.Distance(originalPosition, moveDestination) / moveTimeSeconds;
@@ -26,26 +28,36 @@ public class MoveToOnEnterTrigger : MonoBehaviour {
 	void Update () {
 		if (isMoving) {
             //AudioSource audio = GetComponent<AudioSource>();
-           // audio.Play();
-            movingObject.transform.position = Vector3.MoveTowards(movingObject.transform.position, moveDestination, moveTimeSeconds * Time.deltaTime);
-            if (movingObject.transform.position == moveDestination) {
-                isMoving = false;
-
-
+            // audio.Play();
+            if (movingObject != null) {
+                movingObject.transform.position = Vector3.MoveTowards(movingObject.transform.position, moveDestination, moveTimeSeconds * Time.deltaTime);
+                if (movingObject.transform.position == moveDestination) {
+                    isMoving = false;
+                }
             }
         }
 	}
 
-    void OnTriggerEnter(Collider target) {
+  //  void OnTriggerEnter(Collider target) {
 
-		entranceSource.PlayOneShot (entranceSound);
+		//entranceSource.PlayOneShot (entranceSound);
 
+  //      if (target.tag == "Player") {
+
+  //          isMoving = true;
+
+
+
+  //      }
+  //  }
+
+    void OnTriggerStay(Collider target) {
         if (target.tag == "Player") {
-
+            if (hasAudioPlayed == false && entranceSource != null) {
+                entranceSource.PlayOneShot(entranceSound);
+                hasAudioPlayed = true;
+            }
             isMoving = true;
-
-
-
         }
     }
 }
